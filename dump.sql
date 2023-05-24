@@ -47,7 +47,16 @@ CREATE TABLE `Contacts` (
 
 LOCK TABLES `Contacts` WRITE;
 /*!40000 ALTER TABLE `Contacts` DISABLE KEYS */;
-INSERT INTO `Contacts` VALUES (1,'Bob','Evans','407-111-1123','BobEvans@gmail.com',1),(2,'Cook','Burger','407-111-1124','CookBurger@gmail.com',2),(3,'Aaab','Americo','407-111-1121','AmericaAmerico@gmail.com',1);
+INSERT INTO `Contacts` VALUES 
+(1,'Bob','Evans','407-111-1123','BobEvans@gmail.com',1),
+(2,'Cook','Burger','407-111-1124','CookBurger@gmail.com',2),
+(3,'Aaab','Americo','407-111-1121','AmericaAmerico@gmail.com',1),
+(4,'Diggy','Puppy','407-111-1222','DiggyDoggyPuppy@yahoo.com',1),
+(5,'Elon','Mask','888-888-8888','OfCourseItsElon@tesla.corp',3),
+(6,'Fufu','Arara','386-111-1223','Arara@beewoop.com',2),
+(7,'FirstAid','Kit','376-112-1220','FirstAidKit@bummer.com',4),
+(8,'Tom','Jerry','999-999-9999','TomAndJerry@hotmail.com',3),
+(9,'Gummy','Bear','123-123-1234','DaGummyBear@aol.com',4);
 /*!40000 ALTER TABLE `Contacts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -76,7 +85,11 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES (1,'2023-05-20 19:23:24','2023-05-20 19:23:24','Rick','Leinecker','RickL','COP4331'),(2,'2023-05-20 20:36:55','2023-05-20 20:36:55','Sam','Hill','SamH','Test'),(3,'2023-05-20 20:36:55','2023-05-20 20:36:55','Rick','Leinecker','RickL','5832a71366768098cceb7095efb774f2'),(4,'2023-05-20 20:37:02','2023-05-20 20:37:02','Sam','Hill','SamH','0cbc6611f5540bd0809a388dc95a615b');
+INSERT INTO `Users` VALUES 
+(1,'2023-05-20 19:23:24','2023-05-20 19:23:24','Rick','Leinecker','RickL','COP4331'),
+(2,'2023-05-20 20:36:55','2023-05-20 20:36:55','Sam','Hill','SamH','Test'),
+(3,'2023-05-20 20:36:55','2023-05-20 20:36:55','Poon','Poon','PoonP','testing'),
+(4,'2023-05-20 20:37:02','2023-05-20 20:37:02','WeAre','Group21','WeAreGroup21','testing');
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

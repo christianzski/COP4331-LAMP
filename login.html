@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login page</title>
+  </head>
+
+  <body style = "margin: 0; padding: 0;">
+    <div style = "height: 1.75rem; width: 100vw; background: #424242;">
+	    <h3 style = "text-align: center; margin-top: 0; color: white; font-style: italic;">Project Name</p>
+    </div>
+
+    <form id = "form" style = "display: block; margin: 0 auto; text-align: center;">
+      <label for = "username">Username</label>
+      <div style = "margin-bottom: 0.5rem;">
+        <input placeholder = "Enter your username..." id = "username" type="text"/>
+      </div>
+
+      <label for = "password">Password</label>
+      <div>
+        <input placeholder = "Enter your password..." id = "password" type = "password"/>
+      </div>
+
+    	<input id = "submit" value = "Login" type = "submit"
+		style = "margin: 0 auto; display: block; margin-top: 0.5rem; text-align: center;"/>
+    </form>
+
+    <p style = "text-align: center; color: red" id = "response"></p>
+  </body>
+
+  <script>
+    function setCookie(list) {
+	    let expiry = 30;
+	    let date = new Date();
+	    date.setTime(date.getTime() + (expiry * 60 * 1000));
+
+	    //document.cookie = "keys=values;expires=" + date.toUTCString();
+    }
+    
+    window.onload = function() {
+        document.getElementById("form").addEventListener("submit", function(event) {
+	    event.preventDefault();
+
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            
+            let url = "/LAMPAPI/Login.php";
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", url, true);
+
+            xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+            xhr.onreadystatechange = function() {
+		// If response is OK (200) and operation is completed
+                if(this.readyState == 4 && this.status == 200) {
+                    let json = JSON.parse(xhr.responseText);
+
+		    if(!json["error"]) {
+			document.getElementById("response").style.color = "green";
+			document.getElementById("response").innerText = "Success";
+			// Successful login
+			// Save cookies
+			// Reload webpage
+		    } else {
+			document.getElementById("response").style.color = "red";
+		    	document.getElementById("response").innerText = "Error : " + json["error"];
+		    }
+                }
+            }
+
+            xhr.send(JSON.stringify({"loginId": username, "Password": password}));
+
+	    return false;
+        }, true);
+    }
+  </script>
+</html>

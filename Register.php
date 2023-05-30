@@ -1,15 +1,10 @@
 <?php
 	$inData = getRequestInfo();
 
-	//$userLogin = $inData["userLogin"];
-	//$userPass = $inData["userPass"];
-	//$firstName = $inData["firstName"];
-	//$lastName = $inData["lastName"];
-	
-	$userLogin = 'GabeHan';
-	$userPass = 'PHPS';
-	$firstName = 'Gabe';
-	$lastName = 'Hanson';
+	$userLogin = $inData["userLogin"];
+	$userPass = $inData["userPass"];
+	$firstName = $inData["firstName"];
+	$lastName = $inData["lastName"];
 
 	if(userExists($userLogin) == true)
 	{

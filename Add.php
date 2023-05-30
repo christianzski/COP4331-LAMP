@@ -49,7 +49,7 @@
 	function contactExists( $firstName, $lastName )
 	{
 		$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
-		$stmt=$conn->prepare("select * from Contactsd where FirstName=? and LastName = ?");
+		$stmt=$conn->prepare("select * from Contacts where FirstName=? and LastName = ?");
 		$stmt->bind_param("ss", $firstName, $lastName);
 		$stmt->execute();
 		$res = $stmt->get_result();

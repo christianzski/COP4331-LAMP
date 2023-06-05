@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>COP4331</title>
+    <link href="/css/bootstrap.min.css?v=0" rel="stylesheet">
+    <link href="/css/style.css?v=0" rel="stylesheet">
+    <script type = "text/javascript" src="/js/script.js?v=0"></script>
+  </head>
+  <body>
+    <div style = "display: flex; flex-direction: column; min-height: 100vh;">
+    <main id = "main" role="main" style = "flex: 1;">
+      <nav class="color-black navbar navbar-expand-lg mb-3 justify-content-center bg-body border-bottom border-secondary" style = "padding: 1rem; --bs-bg-opacity: 0.9; z-index: 1;">
+        <img src="images/ucf.png" style="height: 48px; opacity: 1.0"/>
+        <a class="navbar-brand p-1" href="#">Project Name</a>
+      </nav>
+
+      <h2 id = "welcome" class = "col-sm text-light m-auto mt-1 mb-1 text-center w-50" style = "font-weight: bold; z-index: 1; position: relative;">WELCOME TO<br/> CENTRAL FLORIDA</h2>
+      <h4 class = "text-light m-auto mb-1 text-center w-50" id = "userName" style = "position: relative; z-index: 1;"></h4>
+
+      <div id = "form" class = "card w-50 mt-3 p-1" style = "min-width: 300px; margin: 0 auto; z-index: 1;">
+        <div class = "container">
+          <div class = "align-items-center row mb-2">
+            <div class = "align-items-center p-0" style = "background-color: gray; width: 64px; height: 64px; margin-right: 0.5rem; display: flex"><p class = "m-0 w-100 text-center">64x64</p></div>
+
+            <div style = "width: calc(100% - 80px)">
+              <input id = "search" class = "rounded-pill border" style = "width: 100%; padding: 0.5rem;" type = "text" placeholder = "Search for a contact..."/>
+            </div>
+          </div>
+
+          <div id = "results" class = "row border-bottom"></div>
+
+          <div class = "row" style = "justify-content: center;">
+            <button id = "addContact" class = "w-75 btn btn-primary m-2">New contact<span><svg id = "caretArrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+</svg></span></button>
+            <form id = "create" style = "display: none;" class = "text-center mb-2">
+              <label>First Name</label>
+              <input class = "d-block border rounded-pill m-auto mb-1 w-75" id = "firstName" type = "text" placeholder = "Enter a first name"/>
+              <label>Last Name</label>
+              <input class = "d-block border rounded-pill m-auto mb-1 w-75" id = "lastName" type = "text" placeholder = "Enter a last name"/>
+              <label>Phone #</label>
+              <input class = "d-block border rounded-pill m-auto mb-1 w-75" id = "phone" type = "text" placeholder = "Enter a phone number"/>
+              <label>Email Address</label>
+              <input class = "d-block border rounded-pill m-auto mb-1 w-75" id = "email" type = "text" placeholder = "Enter an email address"/>
+
+              <button class = "m-3 btn btn-primary" type = "submit">Add</button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+      <div id = "bg"></div>
+    </main>
+
+    <footer class="footer bg-body py-3 my-4 mb-0 w-100" style = "position: relative;">
+      <div class="form-check pr-1 text-right float-right form-switch" style = "position: absolute; padding-right: 1rem; right: 0;">
+        <input class="form-check-input" type="checkbox" role="switch" id="lightSwitch">
+        <label class="form-check-label" for="lightSwitch">Dark Mode</label>
+      </div>
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="https://github.com/christianzski/COP4331-LAMP" class="nav-link px-2 text-muted">GitHub</a></li>
+        <li class="nav-item"><a href="/about" class="nav-link px-2 text-muted">About</a></li>
+      </ul>
+
+      <p class="text-center text-muted">Summer 2023, Group 2021</p>
+    </footer>
+    </div>
+  </body>
+</html>

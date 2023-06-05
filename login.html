@@ -1,76 +1,61 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en" data-bs-theme="light">
   <head>
-    <title>Login page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>COP4331</title>
+    <link href="/css/bootstrap.min.css?v=0" rel="stylesheet">
+    <link href="/css/style.css?v=0" rel="stylesheet">
+    <script type = "text/javascript" src="/js/script.js?v=0"></script>
   </head>
+  <body>
+    <div style = "display: flex; flex-direction: column; min-height: 100vh;">
+    <main id = "main" role="main" style = "flex: 1;">
+      <nav class="color-black navbar navbar-expand-lg mb-3 justify-content-center bg-body border-bottom border-secondary" style = "padding: 1rem; --bs-bg-opacity: 0.9; z-index: 1;">
+        <img src="/images/ucf.png" style="height: 48px; opacity: 1.0"/>
+        <a class="navbar-brand p-1" href="#">Project Name</a>
+      </nav>
 
-  <body style = "margin: 0; padding: 0;">
-    <div style = "height: 1.75rem; width: 100vw; background: #424242;">
-	    <h3 style = "text-align: center; margin-top: 0; color: white; font-style: italic;">Project Name</p>
+      <h2 class = "col-sm text-light m-auto mt-1 mb-1 text-center w-50" style = "font-weight: bold; z-index: 1;
+position: relative;">WELCOME TO<br/> CENTRAL FLORIDA</h1>
+
+
+      <div class = "card w-50 mt-3" style = "min-width: 300px; margin: 0 auto; z-index: 1;">
+        <div class = "card-body text-center">
+          <h5 class = "card-title mb-5">Login</h5>
+          <form id = "login" class = "mb-5">
+            <label class = "mb-3" for = "username">Username</label>
+            <div class = "mb-4">
+              <input id = "username" class = "p-1 border rounded-pill w-75" type = "text"/>
+            </div>
+
+            <label class = "mb-3" for = "password">Password</label>
+            <div class = "mb-4">
+              <input id = "password" class = "p-1 border rounded-pill w-75" type = "password"/>
+            </div>
+
+            <button class = "btn btn-primary" type = "submit">Log in</button>
+          </form>
+          <p id = "response"></p>
+          <p class = "m-0" style = "bottom: 0;">Don't have an account yet? <a href = "/register">Sign up!</a></p>
+        </div>
+      </div>
+      <div id = "bg"></div>
+    </main>
+
+    <footer class="footer bg-body py-3 my-4 mb-0 w-100" style = "position: relative;">
+      <div class="form-check pr-1 text-right float-right form-switch" style = "position: absolute; padding-right: 1rem; right: 0;">
+        <input class="form-check-input" type="checkbox" role="switch" id="lightSwitch">
+        <label class="form-check-label" for="lightSwitch">Dark Mode</label>
+      </div>
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="https://github.com/christianzski/COP4331-LAMP" class="nav-link px-2 text-muted">GitHub</a></li>
+        <li class="nav-item"><a href="/about" class="nav-link px-2 text-muted">About</a></li>
+      </ul>
+
+      <p class="text-center text-muted">Summer 2023, Group 2021</p>
+    </footer>
     </div>
-
-    <form id = "form" style = "display: block; margin: 0 auto; text-align: center;">
-      <label for = "username">Username</label>
-      <div style = "margin-bottom: 0.5rem;">
-        <input placeholder = "Enter your username..." id = "username" type="text"/>
-      </div>
-
-      <label for = "password">Password</label>
-      <div>
-        <input placeholder = "Enter your password..." id = "password" type = "password"/>
-      </div>
-
-    	<input id = "submit" value = "Login" type = "submit"
-		style = "margin: 0 auto; display: block; margin-top: 0.5rem; text-align: center;"/>
-    </form>
-
-    <p style = "text-align: center; color: red" id = "response"></p>
   </body>
-
-  <script>
-    function setCookie(list) {
-	    let expiry = 30;
-	    let date = new Date();
-	    date.setTime(date.getTime() + (expiry * 60 * 1000));
-
-	    //document.cookie = "keys=values;expires=" + date.toUTCString();
-    }
-    
-    window.onload = function() {
-        document.getElementById("form").addEventListener("submit", function(event) {
-	    event.preventDefault();
-
-            let username = document.getElementById("username").value;
-            let password = document.getElementById("password").value;
-            
-            let url = "/LAMPAPI/Login.php";
-            let xhr = new XMLHttpRequest();
-            xhr.open("POST", url, true);
-
-            xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
-            xhr.onreadystatechange = function() {
-		// If response is OK (200) and operation is completed
-                if(this.readyState == 4 && this.status == 200) {
-                    let json = JSON.parse(xhr.responseText);
-
-		    if(!json["error"]) {
-			document.getElementById("response").style.color = "green";
-			document.getElementById("response").innerText = "Success";
-			// Successful login
-			// Save cookies
-			// Reload webpage
-		    } else {
-			document.getElementById("response").style.color = "red";
-		    	document.getElementById("response").innerText = "Error : " + json["error"];
-		    }
-                }
-            }
-
-            xhr.send(JSON.stringify({"loginId": username, "Password": password}));
-
-	    return false;
-        }, true);
-    }
-  </script>
 </html>

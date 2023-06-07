@@ -49,6 +49,7 @@ window.onload = function() {
     setTheme(null, getCookie("theme"));
 
     if(document.getElementById("userName")) {
+
         const name = getCookie("name");
         if(name != undefined) {
             document.getElementById("userName").innerText = getCookie("name");
@@ -93,6 +94,33 @@ window.onload = function() {
 	    return false;
     }, true);
 
+    document.getElementById("signup")?.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        let userLogin = document.getElementById("username").value;
+        let userPass = document.getElementById("password").value;
+        let firstName = document.getElementById("firstName").value;
+        let lastName = document.getElementById("lastName").value;
+
+        let json = JSON.stringify({"userLogin": userLogin, "userPass": userPass, 
+                                    "firstName": firstName, "lastName": lastName});
+
+        post("/LAMPAPI/Register.php", json, function(response) {
+            let json = JSON.parse(response);
+
+            if (!json["error"]) {
+                setCookie(["userLogin", userLogin], ["userPass", userPass], ["firstName", firstName],
+                            ["lastName", lastName] );
+                // Relocates the first page to the login page, should it go straight to the user page?
+                window.location.href = "/login.html";
+            } else {
+                document.getElementById("response").style.color = "red";
+                document.getElementById("response").innerText = "Error : " + json["error"]
+            }
+            return false;
+        });
+    }, true);
+
     document.getElementById("search")?.addEventListener("input", function(event) {
         event.preventDefault();
 
@@ -114,8 +142,18 @@ window.onload = function() {
             let json = JSON.parse(response);
 
             if(!json["error"]) {
+                const error = document.getElementById("error");
+                error.innerText = json["Status"];
+                error.style.color = "green";
+                error.style.display = "block";
+
                 document.getElementById("addContact").click();
                 searchContacts();
+            } else {
+                const error = document.getElementById("error");
+                error.innerText = json["error"];
+                error.style.color = "red";
+                error.style.display = "block";
             }
         });
 
@@ -128,11 +166,19 @@ function searchContacts() {
     let password = getCookie("password");
     let search = document.getElementById("search").value;
 
-    let json = JSON.stringify({"login": username, "password": password, "search": search});
+    let json = JSON.stringify({"login": username, "password": password,
+                               "search": search, "page": 1});
     post("/LAMPAPI/Search.php", json, function(response) {
         let json = JSON.parse(response);
 
         let html = "";
+        html += '<tr>';
+        html += '<td>First Name</td>';
+        html += '<td>Last Name</td>';
+        html += '<td>Phone</td>';
+        html += '<td>Email</td>';
+        html += '</tr>';
+
         if(!json["error"]) {
             for(let i = 0; i < json["results"].length; ++i) {
                 const item = json["results"][i];
@@ -140,45 +186,47 @@ function searchContacts() {
                 const id = item["ID"];
                 const name = item["FirstName"] + " " + item["LastName"];
 
-                let container = "<div id = 'result-" + id + "' class = 'result' data-name = '" + name + "'>";
-                container += "<div class = 'd-flex justify-content-between'>";
+                let container = "<tr id = 'result-" + id + "' class = 'result' data-name = '" + name + "'>";
+                //container += "<div class = 'd-flex justify-content-between'>";
 
-                container += '<span style = "flex: 1; position: relative;">'
-                container += ('<p style = "width: 100%; padding: 6px;">' + item["FirstName"] + '</p>');
-                container += ('<input class = "contact-input" id = "firstName-' + id + '" style = "display: none;" type = "text" value = "' + item["FirstName"] + '"/>');
-                container += '</span>';
+                container += "<td>";
+                container += ('<input disabled size = "' + item["FirstName"].length + '"" class = "contact-input" id = "firstName-' + id + '" type = "text" value = "' + item["FirstName"] + '"/>');
+                container += "</td>";
 
-                container += '<span style = "flex: 1; position: relative;">'
-                container += ('<p style = "width: 100%; padding: 6px;">' + item["LastName"] + '</p>');
-                container += ('<input class = "contact-input" id = "lastName-' + id + '" style = "display: none;" type = "text" value = "' + item["LastName"] + '"/>');
-                container += '</span>';
+                container += "<td>";
+                container += ('<input disabled size = "' + item["LastName"].length + '"" class = "contact-input" id = "lastName-' + id + '" type = "text" value = "' + item["LastName"] + '"/>');
+                container += "</td>";
 
-                container += '<span style = "flex: 1; position: relative;">'
-                container += ('<p style = "width: 100%; padding: 6px;">' + item["Phone"] + '</p>');
-                container += ('<input class = "contact-input" id = "phone-' + id + '" style = "display: none;" type = "text" value = "' + item["Phone"] + '"/>');
-                container += '</span>';
+                container += "<td>";
+                container += ('<input disabled size = "' + item["Phone"].length + '"" class = "contact-input" id = "phone-' + id + '" type = "text" value = "' + item["Phone"] + '"/>');
+                container += "</td>";
 
-                container += '<span style = "flex: 1; position: relative;">'
-                container += ('<p style = "width: 100%; padding: 6px;">' + item["Email"] + '</p>');
-                container += ('<input class = "contact-input" id = "email-' + id + '" style = "display: none;" type = "text" value = "' + item["Email"] + '"/>');
-                container += '</span>';
+                container += "<td>";
+                container += ('<input disabled size = "' + item["Email"].length + '"" class = "contact-input" id = "email-' + id + '" type = "text" value = "' + item["Email"] + '"/>');
+                container += "</td>";
 
-                container += "</div>";
+                container += "</tr>";
 
-                container += "<div class = 'options justify-content-around'>";
-                container += "<span class = 'justify-content-around' id = 'options-" + id + "' style = 'display: flex;'>";
+                container += "<tr class = 'options'>";
+                container += "<td colspan='4'>";
+
+                container += "<div class = 'd-flex'>";
+
+                container += "<div class = 'justify-content-around w-100' id = 'options-" + id + "' style = 'display: flex;'>";
                 container += "<a href = 'javascript:editContact(" + id + ")'>Edit</a>";
                 container += "<a href = 'javascript:deleteContact(" + id + ");'>Delete</a>";
-                container += "</span>";
-                container += "</div>"
+                container += "</div>";
 
-                container += "<div class = 'justify-content-around' id = 'updates-" + id + "' style = 'display: none;'>";
+                container += "<div class = 'justify-content-around w-100' id = 'updates-" + id + "' style = 'display: none;'>";
                 container += "<a href = 'javascript:editContact(" + id + ")'>Cancel</a>";
                 container += "<a href = 'javascript:updateContact(" + id + ");'>Update</a>";
                 container += "</div>";
+                container += "</div>";
+                container += "</td>";
+                container += "</tr>";
 
-                container += "</div>";
-                container += "</div>";
+                //container += "</div>";
+                //container += "</div>";
 
                 html += container;
             }
@@ -193,16 +241,14 @@ function editContact(id) {
     let labels = tag.getElementsByTagName("p");
     let inputs = tag.getElementsByTagName("input");
 
-
-
     for(let i = 0; i < inputs.length; ++i) {
-        if(inputs[i].style.display == "block") {
-            inputs[i].style.display = "none";
+        if(inputs[i].getAttribute("disabled") == null) {
+            inputs[i].setAttribute("disabled", "");
 
             document.getElementById("options-" + id).style.display = "flex";
             document.getElementById("updates-" + id).style.display = "none";
         } else  {
-            inputs[i].style.display = "block";
+            inputs[i].removeAttribute("disabled");
 
             document.getElementById("options-" + id).style.display = "none";
             document.getElementById("updates-" + id).style.display = "flex";
@@ -229,9 +275,25 @@ function updateContact(id) {
     let json = JSON.stringify({"ID": id, "FirstName": firstName, "LastName": lastName,
                                "Phone": phone, "Email": email});
 
-    editContact(id);
-
     post("/LAMPAPI/Edit.php", json, function(response) {
-        searchContacts();
+        let json = JSON.parse(response);
+
+        if(!json["error"]) {
+            editContact(id);
+            searchContacts();
+
+            const error = document.getElementById("error");
+            error.innerText = json["Status"];
+            error.style.color = "green";
+            error.style.display = "block";
+
+            document.getElementById("addContact").click();
+            searchContacts();
+        } else {
+            const error = document.getElementById("error");
+            error.innerText = json["error"];
+            error.style.color = "red";
+            error.style.display = "block";
+        }
     });
 }

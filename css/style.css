@@ -95,3 +95,77 @@ button {
 #bg:hover{
     background-size: 125vw 125vh;
 }
+
+#register_form {
+    overflow: hidden; 
+    max-width: 500px;
+    height: auto;
+    max-height: 500px;
+
+    display: flex;
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 10px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+#checklist {
+    overflow: hidden; 
+    max-width: 300px;
+    height: auto;
+    max-height: 500px;
+}
+
+#formex {
+    border-radius: 17px;
+    position: relative;
+    background: rgba(155, 188, 115, 0.9);
+    max-width: 350px;
+    margin: 0 auto 100px;
+    top: -110px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    overflow: hidden;
+    height: 360px;
+    transition: .6s;
+
+}
+
+#filler {
+    overflow: hidden;
+    visibility: hidden;
+    max-width: 300px;
+    height: auto;
+    max-height: 500px;
+}
+
+.invalid {
+    color: red;
+}
+
+.invalid:after {
+    position: relative;
+    right: -25px;
+    content: "\2715";
+}
+
+.valid {
+    color: green;
+}
+
+.valid:after {
+    position: relative;
+    right: -25px;
+    content: "\2713";
+}
+
+#passCheckList {
+    display: none;
+}
+#userCheckList {
+    display: none;
+}

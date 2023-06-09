@@ -59,16 +59,27 @@ button {
     display: none;
 }
 
-.result:hover > .options {
-    display: block;
+.options:hover {
+    display: table-row;
+}
+
+.result:hover + .options {
+    display: table-row;
 }
 
 .contact-input {
-  position: absolute;
-  width: calc(100% - 2px);
+    padding: 4px;
+    border-width: 1px;
+    transition: none;
 
-  padding: 4px;
-  top: 0;
+    width: 100%;
+}
+
+.contact-input:disabled {
+    padding: 5px;
+    border: none !important;
+    background-color: transparent;
+    transition: none;
 }
 
 .btn-primary {

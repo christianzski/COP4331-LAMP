@@ -49,7 +49,7 @@ window.onload = function() {
     setTheme(null, getCookie("theme"));
 
     if(document.getElementById("userName")) {
-
+	searchContacts();
         const name = getCookie("name");
         if(name != undefined) {
             document.getElementById("userName").innerText = getCookie("name");
@@ -190,19 +190,19 @@ function searchContacts() {
                 //container += "<div class = 'd-flex justify-content-between'>";
 
                 container += "<td>";
-                container += ('<input disabled size = "' + item["FirstName"].length + '"" class = "contact-input" id = "firstName-' + id + '" type = "text" value = "' + item["FirstName"] + '"/>');
+                container += ('<input disabled size = "' + item["FirstName"].length + '" class = "contact-input" id = "firstName-' + id + '" type = "text" value = "' + item["FirstName"] + '"/>');
                 container += "</td>";
 
                 container += "<td>";
-                container += ('<input disabled size = "' + item["LastName"].length + '"" class = "contact-input" id = "lastName-' + id + '" type = "text" value = "' + item["LastName"] + '"/>');
+                container += ('<input disabled size = "' + item["LastName"].length + '" class = "contact-input" id = "lastName-' + id + '" type = "text" value = "' + item["LastName"] + '"/>');
                 container += "</td>";
 
                 container += "<td>";
-                container += ('<input disabled size = "' + item["Phone"].length + '"" class = "contact-input" id = "phone-' + id + '" type = "text" value = "' + item["Phone"] + '"/>');
+                container += ('<input disabled size = "' + item["Phone"].length + '" class = "contact-input" id = "phone-' + id + '" type = "text" value = "' + item["Phone"] + '"/>');
                 container += "</td>";
 
                 container += "<td>";
-                container += ('<input disabled size = "' + item["Email"].length + '"" class = "contact-input" id = "email-' + id + '" type = "text" value = "' + item["Email"] + '"/>');
+                container += ('<input disabled size = "' + item["Email"].length + '" class = "contact-input" id = "email-' + id + '" type = "text" value = "' + item["Email"] + '"/>');
                 container += "</td>";
 
                 container += "</tr>";

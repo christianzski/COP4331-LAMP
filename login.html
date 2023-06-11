@@ -4,20 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Central Contacts</title>
-    <link href="/css/bootstrap.min.css?v=0" rel="stylesheet">
-    <link href="/css/style.css?v=0" rel="stylesheet">
-    <script type = "text/javascript" src="/js/script.js?v=0.1"></script>
+    <link href="/css/bootstrap.min.css?v=0.30" rel="stylesheet">
+    <link href="/css/style.css?v=0.30" rel="stylesheet">
+    <script type = "text/javascript" src="/js/script.js?v=0.30"></script>
   </head>
   <body>
     <div style = "display: flex; flex-direction: column; min-height: 100vh;">
-    <main id = "main" role="main" style = "flex: 1;">
+    <main id = "main" role="main">
       <nav class="color-black navbar navbar-expand-lg mb-3 justify-content-center bg-body border-bottom border-secondary" style = "padding: 1rem; --bs-bg-opacity: 0.9; z-index: 1;">
         <img src="/images/ucf.png" style="height: 48px; opacity: 1.0"/><a class="navbar-brand p-1" href="/">Central Contacts</a>
       </nav>
 
-      <h2 class = "col-sm text-light m-auto mt-1 mb-1 text-center w-50" style = "font-weight: bold; z-index: 1;
-position: relative;">WELCOME TO<br/> CENTRAL FLORIDA</h1>
-
+      <h2 id = "welcome" class = "col-sm text-light m-auto mt-1 mb-1">WELCOME TO<br/> CENTRAL FLORIDA</h1>
 
       <div class = "card w-50 mt-3" style = "min-width: 300px; margin: 0 auto; z-index: 1;">
         <div class = "card-body text-center">
@@ -36,7 +34,7 @@ position: relative;">WELCOME TO<br/> CENTRAL FLORIDA</h1>
             <button class = "btn btn-primary" type = "submit">Log in</button>
           </form>
           <p id = "response"></p>
-          <p class = "m-0" style = "bottom: 0;">Don't have an account yet? <a href = "/register">Sign up!</a></p>
+          <p class = "m-0" style = "bottom: 0;">Don't have an account yet? <a href = "/register.html">Sign up!</a></p>
         </div>
       </div>
       <div id = "bg"></div>

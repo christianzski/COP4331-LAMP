@@ -87,14 +87,35 @@ button {
     border-color: #fdcc0d;
 }
 
+#main {
+  flex: 1;
+}
+
+#welcome {
+  text-align: center;
+  width: 50%;
+  font-weight: bold;
+  z-index: 1;
+
+  position: relative;
+  pointer-events: none;
+}
+
+#userName {
+  z-index: 1;
+  position: relative;
+  pointer-events: none;
+}
+
 #bg {
     position: absolute;
     width: 100vw; height: 100vh;
     background-image: url('/images/bg.jpg');
     background-repeat: no-repeat;
     background-size: 100vw 100vh;
-    transition: background-size 250ms !important;
-    transition-delay: 50ms !important;
+    transition: background-size 250ms ease 50ms,
+                background-position-x 250ms ease 50ms,
+                background-position-y 250ms ease 50ms;
     top: 0; z-index: 0 !important;
 }
 
@@ -105,6 +126,7 @@ button {
 
 #bg:hover{
     background-size: 125vw 125vh;
+    background-position: -12.5vw -12.5vh;
 }
 
 #register_form {

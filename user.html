@@ -4,35 +4,34 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Central Contacts</title>
-    <link href="/css/bootstrap.min.css?v=0.1" rel="stylesheet">
-    <link href="/css/style.css?v=0" rel="stylesheet">
-    <script type = "text/javascript" src="/js/script.js?v=0.1"></script>
+    <link href="/css/bootstrap.min.css?v=0.30" rel="stylesheet">
+    <link href="/css/style.css?v=0.30" rel="stylesheet">
+    <script type = "text/javascript" src="/js/script.js?v=0.30"></script>
   </head>
   <body>
     <div style = "display: flex; flex-direction: column; min-height: 100vh;">
-    <main id = "main" role="main" style = "flex: 1;">
+    <main id = "main" role="main">
       <nav class="color-black navbar navbar-expand-lg mb-3 justify-content-center bg-body border-bottom border-secondary" style = "padding: 1rem; --bs-bg-opacity: 0.9; z-index: 1;">
         <img src="images/ucf.png" style="height: 48px; opacity: 1.0"/>
         <a class="navbar-brand p-1" href="/">Central Contacts</a>
       </nav>
 
-      <h2 id = "welcome" class = "col-sm text-light m-auto mt-1 mb-1 text-center w-50" style = "font-weight: bold; z-index: 1; position: relative;">WELCOME TO<br/> CENTRAL FLORIDA</h2>
-      <h4 class = "text-light m-auto mb-1 text-center w-50" id = "userName" style = "position: relative; z-index: 1;"></h4>
+      <h2 id = "welcome" class = "col-sm text-light m-auto mt-1 mb-1">WELCOME TO<br/> CENTRAL FLORIDA</h1>
+      <h4 class = "text-light m-auto mb-1 text-center w-50" id = "userName"></h4>
 
       <div id = "form" class = "card w-50 mt-3 p-1" style = "min-width: 300px; margin: 0 auto; z-index: 1;">
         <div class = "container">
           <div class = "align-items-center row mb-2">
-            <div class = "align-items-center p-0" style = "background-color: gray; width: 64px; height: 64px; margin-right: 0.5rem; display: flex"><p class = "m-0 w-100 text-center">64x64</p></div>
-
+            <h3 class = "text-center">Contacts</h3>
             <div style = "width: calc(100% - 80px)">
               <input id = "search" class = "rounded-pill border" style = "width: 100%; padding: 0.5rem;" type = "text" placeholder = "Search for a contact..."/>
             </div>
           </div>
 
-	  <table id = "results" class = "border-bottom w-100">
+	  <table id = "results" class = "w-100">
 	  </table>
 
-          <div class = "row" style = "justify-content: center;">
+          <div class = "row mt-1 border-top" style = "justify-content: center;">
             <button id = "addContact" class = "w-75 btn btn-primary m-2">New contact<span><svg id = "caretArrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
   <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 </svg></span></button>
@@ -49,6 +48,7 @@
               <button class = "m-3 btn btn-primary" type = "submit">Add</button>
             </form>
           </div>
+          <p id = "error" class = "text-center"></p>
 
         </div>
       </div>

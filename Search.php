@@ -1,10 +1,9 @@
 <?php
-
 	$inData = getRequestInfo();
 
 	$searchResults = "";
 	$searchCount = 0;
-    $idCheck = 0;
+  $idCheck = 0;
 
 	$conn = new mysqli("localhost", "Group21", "Group21OnTop", "COP4331");
 
@@ -18,10 +17,12 @@
 	    if($idCheck == 0){
 	        returnWithError( "User not valid within cookie" );
 	    }
-
-		$stmt = $conn->prepare("select * from Contacts where (FirstName like ? or LastName like ?) and UserID=?");
+         
+		$stmt = $conn->prepare("select * from Contacts where (FirstName like ? or LastName like ? or CONCAT(FirstName, ' ', LastName) like ? or Phone like ? or Email like ?) and UserID=? limit ?, 10");
+    
 		$searchName = "%" . $inData["search"] . "%";
-		$stmt->bind_param("ssi", $searchName, $searchName, $idCheck);
+		$offset = (($inData["page"] - 1) * 10);
+		$stmt->bind_param("sssssii", $searchName, $searchName, $searchName, $searchName, $searchName, $idCheck, $offset);
 		$stmt->execute();
 
 		$result = $stmt->get_result();
@@ -34,12 +35,12 @@
 			}
 			$searchCount++;
 
-			$searchResults .= '{"ID" : "' . $row["ID"] . '",
-				"FirstName" : "' . $row["FirstName"] . '",
-				"LastName" : "' . $row["LastName"] . '",
-				"Phone" : "' . $row["Phone"] . '",
-				"Email" : "' . $row["Email"] .	'",
-				"UserID" : "' . $row["UserID"].  '"}';
+			$searchResults .= '{"ID" : "' . $row["ID"] .
+				'", "FirstName" : "' . $row["FirstName"] .
+				'", "LastName" : "' . $row["LastName"] .
+				'", "Phone" : "' . $row["Phone"] .
+				'", "Email" : "' . $row["Email"] .
+				'", "UserID" : "' . $row["UserID"].  '"}';
 		}
 
 		if( $searchCount == 0 )
@@ -78,9 +79,9 @@
 		sendResultInfoAsJson( $retValue );
 	}
 
-	function validUser($conn) //todo here ---> login = PoonP, password = testing
+	function validUser($conn)
 	{
-	    $stmt = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=? AND Password =?");
+	      $stmt = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=? AND Password =?");
         $stmt->bind_param("ss", $_COOKIE["login"], $_COOKIE["password"]);
         $stmt->execute();
         $result = $stmt->get_result();

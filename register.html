@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Central Contacts</title>
-    <link href="/css/bootstrap.min.css?v=0.30" rel="stylesheet">
-    <link href="/css/style.css?v=0.30" rel="stylesheet">
-    <script type = "text/javascript" src="/js/script.js?v=0.30"></script>
+    <link href="/css/bootstrap.min.css?v=0.49" rel="stylesheet">
+    <link href="/css/style.css?v=0.49" rel="stylesheet">
+    <script type = "text/javascript" src="/js/script.js?v=0.49"></script>
   </head>
   <body>
     <div style="display: flex; flex-direction: column; min-height: 100vh;">
-    <main id = "main" role="main">
+    <main id = "main" role="main" style = "overflow: hidden;">
       <nav class="color-black navbar navbar-expand-lg mb-3 justify-content-center bg-body border-bottom border-secondary" style = "padding: 1rem; --bs-bg-opacity: 0.9; z-index: 1;">
         <img src="/images/ucf.png" style="height: 48px; opacity: 1.0"/>
         <a class="navbar-brand p-1" href="/">Central Contacts</a>
@@ -21,7 +21,7 @@
       <div class="row">
       
         <!-- Invisible card used for spacing-->
-      <div id = "filler" class = "card float-left" style = "min-width: 100px; margin: 0 auto; z-index: 1;">
+      <div id = "filler" class = "card d-none d-md-block float-left" style = "min-width: 100px; margin: 0 auto; z-index: 1;">
         <div class = "card-body text-center">
           <h5 class = "card-title mb-4"> PoonP Testing </h5>
           <p class="card-text">testing</p>
@@ -47,7 +47,7 @@
               <label class = "mb-2" for = "username">Username</label>
               <div class = "mb-3">
                 <input id = "username" class = "p-1 border rounded-pill w-75" type = "text"
-                pattern = "(?=.*[A-Z])[a-zA-Z0-9]{1,18}" title ="Please enter a valid username."/>
+                pattern = "[a-zA-Z0-9]{1,18}" title ="Please enter a valid username."/>
               </div>
 
               <label class = "mb-2" for = "password">Password</label>
@@ -56,9 +56,10 @@
                 pattern = "(?=.*\d)(?=.*[A-Za-z])(?=.*[!@#$%^&*]).{8,32}" title ="Please enter a valid password."/>
               </div>
 
-              <button class = "btn btn-primary" type = "submit">Sign Up</button>
+              <button class = "text-dark btn btn-warning" type = "submit">Sign Up</button>
             </form>
             <p class = "mb-0" style = "bottom: 0;">Already have an account? <a href = "/login.html">Log in!</a></p>
+            <p class = "text-center" id = "response"></p>
 
           </div>
         </div>
@@ -76,7 +77,7 @@
             <div id = "userCheckList" class = "card-body text-center">
               <h5 class = "class-title mb-4">Username Criteria</h5>
               <p id = "userChar" class="card-text invalid">At least one character</p>
-              <p id = "userCap" class="card-text invalid">At least one capital letter</p>
+              <p id = "userCap" class="card-text invalid">No special characters</p>
             </div>
 
         </div>
@@ -125,15 +126,19 @@
       };
 
       if (passform.onkeydown) checkPassword();
+      passform.oninvalid = function() {
+          passform.classList.add("invalid-input");
+      }
+      
       passform.onkeyup = function checkPassword() {
 
         var nums = /[0-9]/g;
         var lett = /[a-zA-Z]/g;
         var capLett = /[A-Z]/g;
         var spec = /[!@#$%^&*]/g;
+        let valid = true;
 
-
-        if (passform.value.length >= 8 && passform.value.length <= 32) {
+        if (passform.value.length >= 8 && passform.value.length <= 16) {
           pLenInput.classList.remove("invalid");
           pLenInput.classList.add("valid");
         }
@@ -141,17 +146,18 @@
         else {
           pLenInput.classList.remove("valid");
           pLenInput.classList.add("invalid");
+          valid = false;
         }
 
         if (passform.value.match(nums))
         {
           pNumInput.classList.remove("invalid");
           pNumInput.classList.add("valid");
-          
         }
         else {
           pNumInput.classList.remove("valid");
           pNumInput.classList.add("invalid");
+          valid = false; 
         }
         if (passform.value.match(spec))
         {
@@ -161,6 +167,7 @@
         else {
           pSpecInput.classList.remove("valid");
           pSpecInput.classList.add("invalid");
+          valid = false;
         }
 
         if (passform.value.match(capLett)) {
@@ -170,8 +177,12 @@
         else {
           pLettInput.classList.remove("valid");
           pLettInput.classList.add("invalid");
+          valid = false;
         }
-        
+
+        if(valid) {
+          passform.classList.remove("invalid-input");
+        }
 
       }
       
@@ -203,32 +214,41 @@
         document.getElementById("userCheckList").style.display = "none";
       };
 
+      userform.oninvalid = function() {
+        userform.classList.add("invalid-input");
+      }
 
       if (userform.onkeyDown) checkUsername();
       userform.onkeyup = function checkUsername() {
         var nums = /[0-9]/g;
-        var lett = /[A-Z]/g;
+        var lett = /[!@#$%^&*]/g;
         var hyp = /[-]/g;
         var und = /[_]/g;
-        
+
+        let valid = true;
 
         if ((userform.value.length >= 1 && userform.value.length <= 18)) {
           lenInput.classList.remove("invalid");
           lenInput.classList.add("valid");
         }
-        //
         else {
           lenInput.classList.remove("valid");
           lenInput.classList.add("invalid");
+          valid = false;
         }
 
         if ((userform.value.match(lett))) {
+          capInput.classList.remove("valid");
+          capInput.classList.add("invalid");
+          valid = false;
+        }
+        else {
           capInput.classList.remove("invalid");
           capInput.classList.add("valid");
         }
-        else {
-          capInput.classList.remove("valid");
-          capInput.classList.add("invalid");
+
+        if(valid) {
+          userform.classList.remove("invalid-input");
         }
       };
     </script>

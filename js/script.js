@@ -15,7 +15,7 @@ function setTheme(event, theme) {
 };
 
 function setCookie(list) {
-	let expiry = 30;
+	let expiry = 300;
 	let date = new Date();
 	date.setTime(date.getTime() + (expiry * 60 * 1000));
 
@@ -27,6 +27,11 @@ function setCookie(list) {
 
 function getCookie(cookie) {
     return document.cookie.split("; ").find((row) => row.startsWith(cookie + "="))?.split("=")[1];
+}
+
+function logout() {
+    setCookie([["login", ""], ["password", ""], ["name", ""]]);
+    window.location.href = "/";
 }
 
 function post(url, json, callback) {
@@ -47,13 +52,18 @@ function post(url, json, callback) {
 
 let followBackground = false, hoveredBackground = false, hoveredLocation = [0, 0];
 
-window.onload = function() {
+document.addEventListener("DOMContentLoaded", function() {
     setTheme(null, getCookie("theme"));
 
+    if(window.location.search.indexOf("created=1") >= 0) {
+        document.getElementById("response").innerText = "New Account Created";
+        document.getElementById("response").style.color = "green";
+    }
+
     if(document.getElementById("userName")) {
-	searchContacts(1);
+	    searchContacts(1);
         const name = getCookie("name");
-        if(name != undefined) {
+        if(name != undefined || name != "") {
             document.getElementById("userName").innerText = getCookie("name");
             document.getElementById("welcome").innerHTML += ",";
         } else window.location.href = "/login.html";
@@ -165,13 +175,14 @@ window.onload = function() {
                 setCookie(["userLogin", userLogin], ["userPass", userPass], ["firstName", firstName],
                             ["lastName", lastName] );
                 // Relocates the first page to the login page, should it go straight to the user page?
-                window.location.href = "/login.html";
+                window.location.href = "/login.html?created=1";
             } else {
                 document.getElementById("response").style.color = "red";
-                document.getElementById("response").innerText = "Error : " + json["error"]
+                document.getElementById("response").innerText = "Error : " + json["error"];
             }
-            return false;
         });
+
+        return false;
     }, true);
 
     document.getElementById("search")?.addEventListener("input", function(event) {
@@ -201,9 +212,26 @@ window.onload = function() {
                 error.style.display = "block";
 
                 document.getElementById("addContact").click();
+
+                document.getElementById("firstName").value = "";
+                document.getElementById("lastName").value = "";
+
+                document.getElementById("phone").value = "";
+                document.getElementById("phone").classList.remove("invalid-input");
+
+                document.getElementById("email").value = "";
+                document.getElementById("email").classList.remove("invalid-input");
+
                 searchContacts(1);
             } else {
                 const error = document.getElementById("error");
+                if(json["error"].indexOf("Phone") >= 0) {
+                    document.getElementById("phone").classList.add("invalid-input");
+                } else if(json["error"].indexOf("Email") >= 0) {
+                    document.getElementById("email").classList.add("invalid-input");
+                    document.getElementById("phone").classList.remove("invalid-input");
+                }
+
                 error.innerText = json["error"];
                 error.style.color = "red";
                 error.style.display = "block";
@@ -212,7 +240,7 @@ window.onload = function() {
 
         return false;
     });
-}
+});
 
 function searchContacts(page) {
     let username = getCookie("login");
@@ -233,7 +261,7 @@ function searchContacts(page) {
         html += '</tr>';
 
         if(!json["error"]) {
-            for(let i = 0; i < json["results"].length && i < 9; ++i) {
+            for(let i = 0; i < json["results"].length && i <= 9; ++i) {
                 const item = json["results"][i];
 
                 const id = item["ID"];
@@ -285,14 +313,14 @@ function searchContacts(page) {
             if(next_page || previous_page) {
                 html += "<tr id = 'page-row'>";
                 html += "<td colspan = '4'>";
-                if(next_page && previous_page) html += "<div class = 'd-flex justify-content-around'>";
+                if(next_page && previous_page) html += "<div class = 'd-flex justify-content-between'>";
 
                 if(previous_page) {
-                    html += "<button id = 'previous-page' class = 'float-start btn btn-primary'>Previous Page</button>";
+                    html += "<button id = 'previous-page' class = 'text-dark float-start btn btn-warning'>Previous Page</button>";
                 }
 
                 if(next_page) {
-                    html += "<button id = 'next-page' class = 'float-end btn btn-primary'>Next Page</button>";
+                    html += "<button id = 'next-page' class = 'text-dark float-end btn btn-warning'>Next Page</button>";
                     if(previous_page) html += "</div>";
                 }
 
@@ -368,9 +396,20 @@ function updateContact(id) {
             error.style.color = "green";
             error.style.display = "block";
 
+            document.getElementById("phone-" + id).classList.remove("invalid-input");
+            document.getElementById("email-" + id).classList.remove("invalid-input");
+
             searchContacts(1);
         } else {
             const error = document.getElementById("error");
+            if(json["error"].indexOf("Phone") >= 0) {
+                document.getElementById("phone-" + id).classList.add("invalid-input");
+                document.getElementById("email-" + id).classList.remove("invalid-input");
+            } else if(json["error"].indexOf("Email") >= 0) {
+                document.getElementById("email-" + id).classList.add("invalid-input");
+                document.getElementById("phone-" + id).classList.remove("invalid-input");
+            }
+
             error.innerText = json["error"];
             error.style.color = "red";
             error.style.display = "block";

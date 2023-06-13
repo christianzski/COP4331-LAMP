@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Central Contacts</title>
-    <link href="/css/bootstrap.min.css?v=0.30" rel="stylesheet">
-    <link href="/css/style.css?v=0.30" rel="stylesheet">
-    <script type = "text/javascript" src="/js/script.js?v=0.30"></script>
+    <link href="/css/bootstrap.min.css?v=0.49" rel="stylesheet">
+    <link href="/css/style.css?v=0.49" rel="stylesheet">
+    <script type = "text/javascript" src="/js/script.js?v=0.49"></script>
   </head>
   <body>
     <div style = "display: flex; flex-direction: column; min-height: 100vh;">
@@ -14,6 +14,8 @@
       <nav class="color-black navbar navbar-expand-lg mb-3 justify-content-center bg-body border-bottom border-secondary" style = "padding: 1rem; --bs-bg-opacity: 0.9; z-index: 1;">
         <img src="images/ucf.png" style="height: 48px; opacity: 1.0"/>
         <a class="navbar-brand p-1" href="/">Central Contacts</a>
+
+	<a href = "javascript:logout()" style = "position: absolute; right: 1rem;">Log out</a>
       </nav>
 
       <h2 id = "welcome" class = "col-sm text-light m-auto mt-1 mb-1">WELCOME TO<br/> CENTRAL FLORIDA</h1>
@@ -23,16 +25,14 @@
         <div class = "container">
           <div class = "align-items-center row mb-2">
             <h3 class = "text-center">Contacts</h3>
-            <div style = "width: calc(100% - 80px)">
               <input id = "search" class = "rounded-pill border" style = "width: 100%; padding: 0.5rem;" type = "text" placeholder = "Search for a contact..."/>
-            </div>
           </div>
 
 	  <table id = "results" class = "w-100">
 	  </table>
 
           <div class = "row mt-1 border-top" style = "justify-content: center;">
-            <button id = "addContact" class = "w-75 btn btn-primary m-2">New contact<span><svg id = "caretArrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+            <button id = "addContact" class = "text-dark w-75 btn btn-warning m-2">New contact<span><svg id = "caretArrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
   <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 </svg></span></button>
             <form id = "create" style = "display: none;" class = "text-center mb-2">
@@ -45,11 +45,10 @@
               <label>Email Address</label>
               <input class = "d-block border rounded-pill m-auto mb-1 w-75" id = "email" type = "text" placeholder = "Enter an email address"/>
 
-              <button class = "m-3 btn btn-primary" type = "submit">Add</button>
+              <button class = "text-dark m-3 btn btn-warning" type = "submit">Add</button>
             </form>
           </div>
           <p id = "error" class = "text-center"></p>
-
         </div>
       </div>
       <div id = "bg"></div>

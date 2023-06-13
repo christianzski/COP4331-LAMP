@@ -176,6 +176,15 @@ button {
     max-height: 500px;
 }
 
+.invalid-input {
+    border: 2px dotted red !important;
+}
+
+.invalid-input:focus {
+  outline: 2px dotted red !important;
+  border: none !important;
+}
+
 .invalid {
     color: red;
 }
